@@ -38,9 +38,12 @@ COPY ./bridge_node.py /home/ros/workspace/src/rr_cloud_demo/src/rr_cloud_demo/br
 USER ros
 # build the bridge
 RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/ros/workspace; catkin_make'
+RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/ros/workspace; catkin_make install'
 
 # source setup bash
 RUN echo "source ~/workspace/devel/setup.bash" >> /home/ros/.bashrc
+RUN /bin/bash -c 'source /home/ros/workspace/devel/setup.bash'
+
 
 # run the bridge
-CMD ["rosrun", "rr_cloud_demo", "bridge_node.py"]
+CMD ["/bin/bash", "-c", "rosrun rr_cloud_demo bridge_node.py"]
