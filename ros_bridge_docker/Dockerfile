@@ -1,49 +1,39 @@
 FROM ros:indigo
 
-RUN apt-get update
-
-# install git
-RUN apt-get install git
-
 # install python dependencies
-RUN apt-get install -y python-pip
+RUN apt-get update && apt-get install -y python-pip && apt-get install -y git
 
 # install bridge dependencies
 RUN pip install pika defer
 
-# Now create the ros user
-RUN adduser --gecos "ROS User" --disabled-password ros
+# Create a new user 'dev' and add it to sudoers
+RUN groupadd --gid 1000 dev \
+	&& useradd --gid 1000 --uid 1000 --create-home --shell /bin/bash dev \
+	&& echo "dev:dev" | chpasswd \
+	&& adduser dev sudo
 
-USER ros
+# switch user
+USER dev:dev
 
-# HOME needs to be set explicitly. Without it, the HOME environment variable is
-# set to "/"
-RUN HOME=/home/ros rosdep update
-
-# create workspace folder
-RUN mkdir -p /home/ros/workspace/src
-
-# create the catkin workspace
-RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; catkin_init_workspace /home/ros/workspace/src'
+# Initialize rosdep & create a catkin workspace
+RUN rosdep update \
+	&& mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/src \
+	&& /bin/bash -c "source /opt/ros/indigo/setup.bash && catkin_init_workspace"
 
 # clone the bridge and the bride demo node
-RUN cd /home/ros/workspace/src
-USER root
-RUN git clone https://furbaz:%40zuri2long@bitbucket.org/rapyutians/rr_cloud_bridge.git
-RUN git clone https://furbaz:%40zuri2long@bitbucket.org/rapyutians/rr_cloud_demo.git
+RUN git clone https://furbaz:%40zuri2long@bitbucket.org/rapyutians/rr_cloud_bridge.git ~/catkin_ws/src/rr_cloud_bridge
+RUN cd ~/catkin_ws/src/rr_cloud_bridge; git checkout review_async;
+RUN git clone https://furbaz:%40zuri2long@bitbucket.org/rapyutians/rr_cloud_demo.git ~/catkin_ws/src/rr_cloud_demo
 
 # copy the bride_node with the config in it
-COPY ./bridge_node.py /home/ros/workspace/src/rr_cloud_demo/src/rr_cloud_demo/bridge_node.py
+COPY ./bridge_node.py ~/catkin_ws/src/rr_cloud_demo/src/rr_cloud_demo/bridge_node.py
 
-USER ros
 # build the bridge
-RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/ros/workspace; catkin_make'
-RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/ros/workspace; catkin_make install'
+RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd ~/catkin_ws/; catkin_make'
+# RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd ~/catkin_ws/; catkin_make install'
 
 # source setup bash
-RUN echo "source ~/workspace/devel/setup.bash" >> /home/ros/.bashrc
-RUN /bin/bash -c 'source /home/ros/workspace/devel/setup.bash'
-
+RUN echo "source ~/catking_ws/devel/setup.bash" >> /home/dev/.bashrc
 
 # run the bridge
-CMD ["/bin/bash", "-c", "rosrun rr_cloud_demo bridge_node.py"]
+CMD ["/bin/bash", "-c", "source ~/catking_ws/devel/setup.bash && roscore"]
