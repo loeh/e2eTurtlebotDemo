@@ -33,7 +33,7 @@ RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd ~/catkin_ws/; catkin_make'
 # RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd ~/catkin_ws/; catkin_make install'
 
 # source setup bash
-RUN echo "source ~/catking_ws/devel/setup.bash" >> /home/dev/.bashrc
+RUN echo "source ~/catkin_ws/devel/setup.bash" >> /home/dev/.bashrc
 
 # run the bridge
-CMD ["/bin/bash", "-c", "source ~/catking_ws/devel/setup.bash && roscore"]
+CMD ["/bin/bash", "-c", "source ~/catkin_ws/devel/setup.bash && rosrun rr_cloud_demo bridge_node.py"]

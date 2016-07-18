@@ -7,9 +7,12 @@ metadata:
 spec:
   containers:
    -  name: mapserver
-      image: ros:indigo
+      image: loeh/ros_mapserver
       ports:
         - containerPort: 11311
           name: mapserver
-      args:
-          - roscore
+      env:
+        - name: ROS_HOSTNAME
+          value: mapserver
+        - name: ROS_MASTER_URI
+          value: http://master:11311
