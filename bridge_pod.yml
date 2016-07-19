@@ -8,13 +8,10 @@ spec:
   containers:
    -  name: bridge
       image: loeh/ros_bridge_node:latest
-      ports:
-        - containerPort: 11311
-          name: bridge
       env:
         - name: ROS_HOSTNAME
           value: bridge
         - name: ROS_MASTER_URI
           value: http://master:11311
         - name: CLOUD_BROKER_HOST
-          value: http://ros-broker
+          value: ros-broker

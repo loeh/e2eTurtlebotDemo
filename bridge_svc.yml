@@ -7,6 +7,10 @@ spec:
   ports:
     - port: 11311
       protocol: TCP
+      name: master
+    - port: 5672
+      protocol: TCP
+      name: broker
   selector:
     name: bridge
   type: ClusterIP
