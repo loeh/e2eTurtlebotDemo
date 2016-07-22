@@ -9,7 +9,7 @@ if __name__ == '__main__':
 		'host': os.environ['CLOUD_BROKER_HOST'], 
 		'broker_user': 'rapyuta_robotics',
 		'broker_passwd': 'ECRP_KTI_project',
-		'topics': ['/move_base_simple/goal','/map'],
+		'topics': ['/move_base_simple/goal, /map'],
 		'services': []
 	}
 	bridge = Bridge(config)

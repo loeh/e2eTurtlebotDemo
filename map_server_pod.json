@@ -1,0 +1,28 @@
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "labels": {
+      "name": "mapserver"
+    },
+    "name": "mapserver"
+  },
+  "spec": {
+    "containers": [
+      {
+        "env": [
+          {
+            "name": "ROS_HOSTNAME",
+            "value": "mapserver"
+          },
+          {
+            "name": "ROS_MASTER_URI",
+            "value": "http://master:11311"
+          }
+        ],
+        "image": "loeh/ros_mapserver:latest",
+        "name": "mapserver"
+      }
+    ]
+  }
+}

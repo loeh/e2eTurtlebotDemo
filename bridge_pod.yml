@@ -8,6 +8,7 @@ spec:
   containers:
    -  name: bridge
       image: loeh/ros_bridge_node:latest
+      imagePullPolicy: Always
       env:
         - name: ROS_HOSTNAME
           value: bridge
