@@ -1,15 +1,19 @@
+--- 
 apiVersion: v1
 kind: Pod
-metadata:
-  name: mapserver
-  labels:
+metadata: 
+  labels: 
     name: mapserver
-spec:
-  containers:
-   -  name: mapserver
-      image: loeh/ros_mapserver:latest
-      env:
-        - name: ROS_HOSTNAME
+  name: mapserver
+spec: 
+  containers: 
+    - 
+      env: 
+        - 
+          name: ROS_HOSTNAME
           value: mapserver
-        - name: ROS_MASTER_URI
-          value: http://master:11311
+        - 
+          name: ROS_MASTER_URI
+          value: "http://master:11311"
+      image: "loeh/ros_mapserver:latest"
+      name: mapserver
