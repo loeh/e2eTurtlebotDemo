@@ -4,23 +4,15 @@ import roslib;
 import rospy
 import actionlib
 import sys
-import logging
-
-from rospy import logdebug, logerr, logfatal, loginfo, logwarn
+import salt.client
 
 #move_base_msgs
 from move_base_msgs.msg import *
 
-logging.basicConfig(level=logging.INFO)
-
 def simple_move(move_position):
 
-    rospy.loginfo('first')
-    rospy.init_node('moveTo', log_level=rospy.INFO)
-
     #Simple Action Client
-    sac = actionlib.SimpleActionClient('moveTo', MoveBaseAction )
-    rospy.loginfo('second')
+    sac = actionlib.SimpleActionClient('move_base', MoveBaseAction )
 
     #create goal
     goal = MoveBaseGoal()
@@ -34,7 +26,6 @@ def simple_move(move_position):
     goal.target_pose.header.stamp = rospy.Time.now()
 
     #start listner
-    print 'wait for server'
     sac.wait_for_server()
 
     #send goal
@@ -43,17 +34,42 @@ def simple_move(move_position):
     #finish
     sac.wait_for_result()
 
-    #print result
-    result = sac.get_result()
+    #check status of result
+    return sac.get_state()
+
+
+def sendGoalEvent(succeded, message):
+    #create a salt caller
+    caller = salt.client.Caller()
+
+    caller.sminion.functions['event.send'](
+        'moveto/goal/success',
+        {
+            'success': succeded,
+            'message': message,
+        }
+    )
+
+    
 
 if __name__ == '__main__':
     try:
 	away_pos = [-0.536414086819, 0.492057323456, 0.992841611677, 0.119438411419]
 	home_pos = [-5.86358213425, 2.0202703476, 0.999910191108, -0.0134018550249]
+
+        rospy.init_node('simple_move', log_level=rospy.INFO)
 	if sys.argv[1] == 'home':	
-        	simple_move(home_pos)
+            result = simple_move(home_pos)
+            if result == actionlib.GoalStatus.SUCCEEDED:
+	        rospy.loginfo('Goal successfully reached!')
+                sendGoalEvent(True, "goal successfully reached!")
+            else:
+                rospy.loginfo('Something went wrong')
+	        rospy.loginfo(sac.get_state())
+                sendGoalEvent(False, "Something went wrong")
+
 	elif sys.argv[1] == 'away':
-		simple_move(away_pos)
+		result = simple_move(away_pos)
 	else:
 		print 'use home or away'
 	

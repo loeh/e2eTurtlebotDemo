@@ -4,6 +4,7 @@ import roslib;
 import rospy
 import actionlib
 import sys
+import salt.client
 
 #move_base_msgs
 from move_base_msgs.msg import *
@@ -37,6 +38,20 @@ def simple_move(move_position):
     return sac.get_state()
 
 
+def sendGoalEvent(succeded, message):
+    #create a salt caller
+    caller = salt.client.Caller()
+
+    caller.sminion.functions['event.send'](
+        'moveto/goal/success',
+        {
+            'success': succeded,
+            'message': message,
+        }
+    )
+
+    
+
 if __name__ == '__main__':
     try:
 	away_pos = [-0.536414086819, 0.492057323456, 0.992841611677, 0.119438411419]
@@ -47,9 +62,11 @@ if __name__ == '__main__':
             result = simple_move(home_pos)
             if result == actionlib.GoalStatus.SUCCEEDED:
 	        rospy.loginfo('Goal successfully reached!')
+                sendGoalEvent(True, "goal successfully reached!")
             else:
                 rospy.loginfo('Something went wrong')
 	        rospy.loginfo(sac.get_state())
+                sendGoalEvent(False, "Something went wrong")
 
 	elif sys.argv[1] == 'away':
 		result = simple_move(away_pos)
