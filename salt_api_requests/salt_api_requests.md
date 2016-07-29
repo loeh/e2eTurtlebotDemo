@@ -15,7 +15,7 @@ curl -si http://ab44513583e1711e6b0ef02e4cf15b02-1319127330.eu-central-1.elb.ama
 salt turtlebot.robonet cmd.run '/opt/ros/indigo/share/rocon_apps/chirp.bash /opt/ros/share/rocon_apps/sounds/meow.wav 90' runas=turtlebot shell="/bin/bash"  cwd="/home/turtlebot"
 
 ### Get token
-curl -i http://ab44513583e1711e6b0ef02e4cf15b02-1319127330.eu-central-1.elb.amazonaws.com:8001/login -H "Accept: application/json" -d username='roboreg' -d password='splab' -d eauth=pam
+curl -i http://a8ebe290c549111e69b640206bb85836-998418534.eu-central-1.elb.amazonaws.com:8001/login -H "Accept: application/json" -d username='roboreg' -d password='splab' -d eauth=pam
 
 ### Meow through API
 curl -si http://ab44513583e1711e6b0ef02e4cf15b02-1319127330.eu-central-1.elb.amazonaws.com:8001 -H "Accept: application/json" -H "X-Auth-Token: ebc7630d592a1ff7f0ac3552631ec079fa4fedd3" -d client=local -d tgt='*' -d fun=cmd.run -d arg='/opt/ros/indigo/share/rocon_apps/chirp.bash /opt/ros/indigo/share/rocon_apps/sounds/meow.wav 90'

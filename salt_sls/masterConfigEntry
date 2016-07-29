@@ -1,0 +1,4 @@
+reactor:
+  - 'moveto/goal/success':
+    - /srv/reactor/goalReached.sls
+
