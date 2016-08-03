@@ -1,46 +1,7 @@
 FROM ros:indigo
-MAINTAINER Bharat Khatri <bharat.khatri@rapyuta-robotics.com>
 
-ENV BITBUCKET_USER <your_bitbucket_username>
-ENV BITBUCKET_PASSWORD <your_bitbucket_password>
-ENV RR_CLOUD_BRIDGE_BRANCH sprint_demo
+# install rosbridge server
+RUN apt-get update && apt-get install -y ros-indigo-rosbridge-server
 
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y vim && apt-get install -y g++ && apt-get install -y python-pip 
-
-# Create a new user 'dev' and add it to sudoers
-RUN groupadd --gid 1000 dev \
-	&& useradd --gid 1000 --uid 1000 --create-home --shell /bin/bash dev \
-	&& echo "dev:dev" | chpasswd \
-	&& adduser dev sudo
-
-# Update 'python.yaml' used by rosdep, and initialize rosdep
-RUN echo "yaml https://raw.githubusercontent.com/khatribharat/rosdistro/master/rosdep/python.yaml" > /etc/ros/rosdep/sources.list.d/19-default.list
-
-# Make `apt-get install` run without waiting on yes/no prompts.
-RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
-
-# Switch account from 'root' to 'dev'
-USER dev:dev
-
-
-# Initialize rosdep & create a catkin workspace
-RUN rosdep update \
-	&& mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/src \
-	&& /bin/bash -c "source /opt/ros/indigo/setup.bash && catkin_init_workspace"
-
-# Fetch 'rr_cloud_bridge', 'rr_cloud_demo' source from Bitbucket
-RUN if [ -f ~/.netrc ] ; then mv ~/.netrc ~/.netrc.old ; fi && printf "machine bitbucket.org\nlogin ${BITBUCKET_USER}\npassword ${BITBUCKET_PASSWORD}" > ~/.netrc \
-	&& cd ~/catkin_ws/src \
-	&& git clone https://bitbucket.org/rapyutians/rr_cloud_bridge.git \
-	&& git clone https://bitbucket.org/rapyutians/rr_cloud_demo.git \
-	&& rm ~/.netrc && if [ -f ~/.netrc.old ] ; then mv ~/.netrc.old ~/.netrc ; fi
-
-# Build 'rr_cloud_bridge', 'rr_cloud_demo' source
-RUN /bin/bash -c "source /opt/ros/indigo/setup.bash \
-	&& cd ~/catkin_ws/src/rr_cloud_bridge && git checkout ${RR_CLOUD_BRIDGE_BRANCH} \ 
-	&& cd ../.. && catkin_make \
-	&& echo "dev" | sudo -S /bin/bash -c \"source devel/setup.bash && rosdep install rr_cloud_bridge rr_cloud_demo\""
-
-# Start the container with ROS master
-CMD ["/bin/bash", "-c", "source /opt/ros/indigo/setup.bash && roscore"]
+# run the bridge
+CMD ["/bin/bash", "-c", "source /opt/ros/indigo/setup.bash && roslaunch rosbridge_server rosbridge_websocket.launch"]

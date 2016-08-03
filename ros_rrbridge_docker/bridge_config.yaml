@@ -1,0 +1,45 @@
+bridge_config:
+  broker:
+    amqp:
+      host: ros-broker
+      user: rapyuta_robotics
+      password: ECRP_KTI_project
+#      vhost: / [optional]
+      heartbeat_interval: 30 #[optional]
+      socket_timeout: 10 #[optional]
+#      ssl: [optional]
+#          keyfile: < PATH TO KEYFILE >
+#          certfile: < PATH to CERTFILE >
+#          ca_cert: < PATH TO CACERT >
+#          cert_required: CERT_NONE | CERT_OPTIONAL | CERT_REQUIRED
+#          ssl_version: PROTOCOL_SSLv23 | PROTOCOL_SSLv3 |PROTOCOL_TLSv1
+  endpoint:
+    alias: laptop
+#    ros: [optional]
+#      tcp_port: 0
+#      heartbeat_interval: 1
+    topics:
+      - move_base_simple/goal
+      - move_base/goal
+      - initialpose
+
+
+
+#bridge_config:
+#  endpoint_alias: laptop
+#  broker_host: ros-broker
+#  broker_passwd: ECRP_KTI_project
+#  broker_user: rapyuta_robotics
+#  broker_heartbeat_interval: 10
+#  ros_tcp_port: 0
+#  ros_heartbeat_interval: 1
+#  topics:
+#    - move_base_simple/goal
+#    - move_base/goal
+#    - initialpose
+##  services: # remember to delete the field entirely if your list is empty as rosparam will complain about none
+##    - service1
+##    - service2
+##        compression: zlib/gzip or snappy or bzip2/bzip or lzo/lzop/lz
+
+## the suitable compression libraries need to be installed , refer  README

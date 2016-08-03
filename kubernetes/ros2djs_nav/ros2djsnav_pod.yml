@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webfrontend
+  labels:
+    name: webfrontend
+spec:
+  containers:
+    - name: webfrontend
+      image: loeh/webfrontend:latest
+      ports:
+        - containerPort: 80
+          name: web
+        - containerPort: 9090
+          name: rosbridge

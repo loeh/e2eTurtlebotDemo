@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rosbridge
+  labels:
+    name: rosbridge
+spec:
+  containers:
+    - env:
+        - name: ROS_HOSTNAME
+          value: rosbridge
+        - name: ROS_MASTER_URI
+          value: http://master:11311
+      name: rosbridge
+      image: loeh/ros_bridge_node:latest
+      ports:
+        - containerPort: 11311
+          name: master
+        - containerPort: 9090
+          name: rosbridge

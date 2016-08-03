@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: rosbridge-public
+spec: 
+  ports: 
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: rosbridge
+  selector: 
+    name: rosbridge
+  type: LoadBalancer

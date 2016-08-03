@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: bridge
+  name: rrbridge
   labels:
-    name: bridge
+    name: rrbridge
 spec:
   containers:
    -  name: bridge
-      image: loeh/ros_bridge_node:latest
+      image: loeh/ros_rrbridge_node:latest
       imagePullPolicy: Always
       env:
         - name: ROS_HOSTNAME
-          value: bridge
+          value: rrbridge
         - name: ROS_MASTER_URI
           value: http://master:11311
         - name: CLOUD_BROKER_HOST

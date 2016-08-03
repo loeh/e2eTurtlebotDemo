@@ -8,6 +8,8 @@
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/ros2djs/current/ros2d.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/nav2djs/current/nav2d.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="post.js"></script>
 
 <script type="text/javascript">
   /**
@@ -16,7 +18,7 @@
   function init() {
     // Connect to ROS.
     var ros = new ROSLIB.Ros({
-      url : 'ws://localhost:9090'
+      url : 'ws://aff02f8ab598011e69b640206bb85836-875157719.eu-central-1.elb.amazonaws.com:9090'
     });
 
     // Create the main viewer.
@@ -38,7 +40,11 @@
 </head>
 
 <body onload="init()">
-  <h1>Simple Navigation Example</h1>
+  <h1>Turtlebot navigation example</h1>
   <div id="nav"></div>
+  <div id="control">
+    <button onclick="sendPostRequest('startUp')">Wake up the Robot</button>
+    <button onclick="sendPostRequest('goBack')">Go back home</button>
+  </div>
 </body>
 </html>

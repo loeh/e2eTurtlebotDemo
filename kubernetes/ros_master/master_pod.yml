@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mapserver
+  name: master
   labels:
-    name: mapserver
+    name: master
 spec:
   containers:
-   -  name: mapserver
-      image: ros:indigo
+   -  name: master
+      image: loeh/rosmaster:latest
       ports:
         - containerPort: 11311
-          name: mapserver
+          name: master
       args:
           - roscore
