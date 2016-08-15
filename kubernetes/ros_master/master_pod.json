@@ -1,0 +1,27 @@
+{
+  "kind": "Pod", 
+  "spec": {
+    "containers": [
+      {
+        "image": "loeh/rosmaster:latest", 
+        "args": [
+          "roscore"
+        ], 
+        "name": "master", 
+        "ports": [
+          {
+            "containerPort": 11311, 
+            "name": "master"
+          }
+        ]
+      }
+    ]
+  }, 
+  "apiVersion": "v1", 
+  "metadata": {
+    "labels": {
+      "name": "master"
+    }, 
+    "name": "master"
+  }
+}
