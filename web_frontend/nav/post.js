@@ -9,6 +9,14 @@ function sendGetRequest(endpoint) {
 
 function sendPostRequest(endpoint) {
   $.post(baseURL + endpoint, function(data, status){
-       alert("Data: " + data + "\nStatus: " + status);
+       //alert("Data: " + data + "\nStatus: " + status);
+       $( ".list-group" ).append( "<li class='list-group-item'>"+data+"<span class='glyphicon glyphicon-ok' aria-hidden='true'></span></li>" );
+       redirect();
    });
+}
+
+function redirect() {
+  if($('.list-group-item').length == 2){
+    setTimeout("window.location.href = 'map.html';", 2000);
+  }
 }
