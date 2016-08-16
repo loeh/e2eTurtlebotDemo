@@ -1,2 +1,4 @@
 curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" -H "Content-Type: application/json" --stderr /dev/null --request POST https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/v1/namespaces/default/pods --data @map_server_pod.json
 
+
+curl -sSk -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" -H "Content-Type: application/json" --stderr /dev/null --request POST https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/v1/namespaces/default/pods --data @map_server_pod.json
