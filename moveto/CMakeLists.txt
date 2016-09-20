@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   geometry_msgs
-  salt.client
 )
 
 ## System dependencies are found with CMake's conventions
@@ -69,11 +68,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-   DEPENDENCIES
-   move_base_msgs
-   geometry_msgs
-)
+#generate_messages(
+#   DEPENDENCIES
+#   move_base_msgs
+#   std_msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

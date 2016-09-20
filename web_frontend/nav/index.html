@@ -15,12 +15,17 @@
 <script type="text/javascript" src="post.js"></script>
 
 <script type="text/javascript">
-  function startUp() {
+  function startUpEverything() {
     sendPostRequest('createKubeNodes')
     sendPostRequest('startUp')
   }
+
+  function startUpRobot() {
+    sendPostRequest('startUp')
+    setTimeout("window.location.href = 'map.html';", 15000);
+  }
 </script>
-  
+
 
 </head>
 
@@ -35,16 +40,18 @@
         </br>
         <h1>Turtlebot navigation demo!</h1>
         </br></br></br></br>
-        <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUp()">Start it up!</a></p>
+        <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUpEverything()">Start everything up</a></p>
+        </br>
+        <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUpRobot()">Wake up the Robot</a></p>
 	</br>
 	<ul class="list-group">
-	  
+
 	</ul>
       </div>
     </div>
     </div>
     <div class="col-md-2"></div>
   </div>
-  
+
 </body>
 </html>

@@ -15,7 +15,13 @@ curl -si http://ab44513583e1711e6b0ef02e4cf15b02-1319127330.eu-central-1.elb.ama
 salt turtlebot.robonet cmd.run '/opt/ros/indigo/share/rocon_apps/chirp.bash /opt/ros/share/rocon_apps/sounds/meow.wav 90' runas=turtlebot shell="/bin/bash"  cwd="/home/turtlebot"
 
 ### Get token
-curl -i http://a8494c153542511e69b640206bb85836-116705424.eu-central-1.elb.amazonaws.com:8001/login -H "Accept: application/json" -d username='roboreg' -d password='splab' -d eauth=pam
+curl -i http://a8ebe290c549111e69b640206bb85836-998418534.eu-central-1.elb.amazonaws.com:8001/login -H "Accept: application/json" -d username='roboreg' -d password='splab' -d eauth=pam
 
 ### Meow through API
 curl -si http://ab44513583e1711e6b0ef02e4cf15b02-1319127330.eu-central-1.elb.amazonaws.com:8001 -H "Accept: application/json" -H "X-Auth-Token: ebc7630d592a1ff7f0ac3552631ec079fa4fedd3" -d client=local -d tgt='*' -d fun=cmd.run -d arg='/opt/ros/indigo/share/rocon_apps/chirp.bash /opt/ros/indigo/share/rocon_apps/sounds/meow.wav 90'
+
+
+curl -si http://a8ebe290c549111e69b640206bb85836-998418534.eu-central-1.elb.amazonaws.com:8001 -H "Accept: application/json" -H "X-Auth-Token: 8ee735de3580f922cd67c1c7b106ea99e9895e76" -d client=local -d tgt='*' -d fun=cmd.run_bg -d arg='/home/turtlebot/processmanagement/procman -T start roslaunch icclab_turtlebot amcl_icclab.launch map_file:=/home/turtlebot/catkin_ws/src/icclab_turtlebot/icclab_latest_map.yaml initial_pose_x:=-5.97576435259 initial_pose_y:=2.07389271192 initial_pose_a:=3.14' cwd="/home/turtlebot/processmanagement/"
+
+
+-d arg='roslaunch' -d arg='icclab_turtlebot' -d arg='amcl_icclab.launch' -d arg='map_file:=/home/turtlebot/catkin_ws/src/icclab_turtlebot/icclab_latest_map.yaml' -d arg='initial_pose_x:=-5.97576435259' -d arg='initial_pose_y:=2.07389271192' -d arg='initial_pose_a:=3.14'

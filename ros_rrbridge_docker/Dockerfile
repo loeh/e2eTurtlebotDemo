@@ -13,10 +13,10 @@ RUN rosdep update \
 
 # clone the bridge and the bride demo node
 RUN git clone https://furbaz:%40zuri2long@bitbucket.org/rapyutians/rr_cloud_bridge.git /home/root/catkin_ws/src/rr_cloud_bridge
-RUN cd /home/root/catkin_ws/src/rr_cloud_bridge; git checkout kombu;
+# RUN cd /home/root/catkin_ws/src/rr_cloud_bridge; git checkout kombu;
 
 # copy the bride_node with the config in it
-COPY bridge_config.yaml /home/root/catkin_ws/src/rr_cloud_bridge/launch/
+COPY bridge_config.yaml /home/root/catkin_ws/src/rr_cloud_bridge/config/
 
 # build the bridge
 RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/root/catkin_ws/; catkin_make'
