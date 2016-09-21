@@ -72,8 +72,10 @@ def goalReached(status):
 
     event_str = "closeToBase/" + status
     rospy.loginfo(event_str)
-    while(pub.get_num_connections() == 0)
-        
+
+    #while(pub.get_num_connections() == 0):
+    #    r.sleep()
+
     pub.publish(event_str)
 
 
