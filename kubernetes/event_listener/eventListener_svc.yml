@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: eventlistener
+spec:
+  ports: 
+    - port: 11311
+      protocol: TCP
+  selector: 
+    name: eventlistener
+  type: LoadBalancer
