@@ -16,8 +16,12 @@
 
 <script type="text/javascript">
   function startUpEverything() {
-    sendPostRequest('createKubeNodes')
+    sendPostRequest('installNodes')
     sendPostRequest('startUp')
+  }
+
+  function startUpCloud() {
+    sendPostRequest('installNodes')
   }
 
   function startUpRobot() {
@@ -41,6 +45,8 @@
         <h1>Turtlebot navigation demo!</h1>
         </br></br></br></br>
         <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUpEverything()">Start everything up</a></p>
+        </br>
+        <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUpCloud()">Start up the cloud</a></p>
         </br>
         <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button" onclick="startUpRobot()">Wake up the Robot</a></p>
 	</br>
