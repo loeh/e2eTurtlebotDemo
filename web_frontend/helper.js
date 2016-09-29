@@ -21,6 +21,11 @@ function redirect() {
   }
 }
 
+function turnOff() {
+  sendPostRequest('removeNodes');
+  setTimeout("window.location.href = 'index.html';", 2000);
+}
+
 function init() {
   $.get(baseURL + 'getServiceEndPoint', function(data, status){
       url = data + ':9090';

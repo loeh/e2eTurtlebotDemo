@@ -8,7 +8,7 @@ spec:
   containers:
     - env:
         - name: ROS_HOSTNAME
-          value: mapserver
+          value: eventlistener
         - name: ROS_MASTER_URI
           value: http://master:11311
       name: eventlistener

@@ -7,40 +7,31 @@
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/ros2djs/current/ros2d.min.js"></script>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/nav2djs/current/nav2d.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="helper.js"></script>
 
-<script type="text/javascript" type="text/javascript">
-  /**
-   * Setup all visualization elements when the page is loaded.
-   */
-  function init() {
-    // Connect to ROS.
-    var ros = new ROSLIB.Ros({
-      url : 'ws://localhost:9090'
-    });
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    // Create the main viewer.
-    var viewer = new ROS2D.Viewer({
-      divID : 'map',
-      width : 900,
-      height : 900
-    });
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    // Setup the map client.
-    var gridClient = new ROS2D.OccupancyGridClient({
-      ros : ros,
-      rootObject : viewer.scene
-    });
-    // Scale the canvas to fit to the map
-    gridClient.on('change', function(){
-      viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
-      viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
-    });
-  }
-</script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
 <body onload="init()">
-  <h1>Simple Map Example</h1>
-  <div id="map"></div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+      <h1>Turtlebot navigation</h1>
+      <div id="nav"></div>
+    </div>
+    <div class="col-md-4">
+      <p><a class="btn btn-primary btn-lg" style="margin-top:68px; width:200px;" href="#" role="button" onclick="sendPostRequest('goBack')">Go back home</a></p>
+      <p><a class="btn btn-primary btn-lg" style="width:200px" href="#" role="button" onclick="turnOff()">Turn off</a></p>
+    </div>
+  </div>
 </body>
 </html>
