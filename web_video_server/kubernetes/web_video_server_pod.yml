@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webvideoserver
+  labels:
+    name: webvideoserver
+spec:
+  containers:
+    - env:
+        - name: ROS_HOSTNAME
+          value: webvideoserver
+        - name: ROS_MASTER_URI
+          value: http://master:11311
+      name: webvideoserver
+      image: loeh/web_video_server:latest
+      ports:
+        - containerPort: 11311
+          name: master
+        - containerPort: 8080
+          name: webview
